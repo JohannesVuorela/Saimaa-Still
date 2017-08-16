@@ -1,6 +1,9 @@
 var cool = require('cool-ascii-faces');
+var pg = require('pg');
 var express = require('express');
 var app = express();
+
+var pool = new pg.Pool();
 
 app.set('port', (process.env.PORT || 5000));
 
