@@ -19,10 +19,10 @@ app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 app.get('/', function(request, response) {
-  response.render('pages/index');
+  response.render('pug/index');
 });
 
 app.get('/cool', function(request, response) {
