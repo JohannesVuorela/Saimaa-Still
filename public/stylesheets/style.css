@@ -1,0 +1,19 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("http://saimaastill.fi/wp-content/uploads/2014/04/8151682021_bf1c2a7275_o-tausta.jpg");
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:100%;
+  background-attachment:fixed;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#store {
+  background-color: rgba(243, 243, 243, 0.9);
+  height: 1000px;
+}
