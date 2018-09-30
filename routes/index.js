@@ -99,7 +99,7 @@ router.get('/register', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   bcrypt.hash(req.body.salasana, 10).then(function(hash) {
     var komento = "INSERT INTO saimaastill_users (username, encrypted_password, spostiosoite, staffstatus) VALUES (?, ?, ?, ?)";
-    yhteys.query(komento, [req.body.username, hash, req.body.email, 1], function(err, results) {
+    yhteys.query(komento, [req.body.username, hash, req.body.email, 0], function(err, results) {
       if(err) { res.send("Something went wrong... Please try again later."); } else {
         res.send("Success");
       }
