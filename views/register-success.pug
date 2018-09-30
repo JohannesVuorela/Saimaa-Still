@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  p(style="padding: 3em;") Your account has been succesfully created. Redirecting back to the home page in 5 seconds...
+  script.
+    setTimeout(function() { location.replace("/"); }, 5000);

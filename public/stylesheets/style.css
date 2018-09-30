@@ -15,5 +15,25 @@ a {
 
 #store {
   background-color: rgba(243, 243, 243, 0.9);
-  height: 1000px;
+  width: 960px;
+  padding: 0;
+}
+
+#sivupalkki {
+  padding: 1em;
+  background-color: #dddddd;
+  width: 240px;
+  float: right;
+}
+
+.tuotelink {
+  padding: 10px;
+  width: 200px;
+  height: 150px;
+  display: block;
+  float: left;
+}
+
+.tab-pane {
+  padding: 3em 10em;
 }

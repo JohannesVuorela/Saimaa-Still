@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h2(style="margin-left: 30px;") Placed Orders
+  each kuitti in kuitit
+    div(style="background-color: white; margin: 30px;")
+      p <strong>Customer name:</strong> #{kuitti.etunimi} #{kuitti.sukunimi}
+      p <strong>E-mail address:</strong> #{kuitti.spostiosoite}
+      p <strong>Order received:</strong> #{kuitti.pvm.toDateString()}
+      p <strong>Post address:</strong> #{kuitti.postiosoite}
+      p <strong>Zip code:</strong> #{kuitti.postinumero}
+      p <strong>City:</strong> #{kuitti.postitoimipaikka}
+      p <strong>Payment received:</strong> No
+      p <strong>Products</strong>
+        ul
+          each tavara in tavaratilaukset
+            each tuote in tuotteet
+              if tavara.tuote == tuote.id
+                li #{tavara.lkm} x #{tuote.tuotenimi}

@@ -1,6 +1,27 @@
 extends layout
 
 block content
-  #store.container-fluid
-    h1 Saimaa Still Store
-    p Under construction...
+  #sivupalkki
+    #loginpalkki
+    #ostoskori
+      h3 Shopping Cart
+      p Your shoping cart is empty.
+  #listaus
+    h1(style="margin-left: 15px;") Products
+    each tuote in tiedot
+      div(id="tuotediv_" + tuote.id)
+        table(style="border: 15px solid transparent;")
+          tr
+            td(style="width: 215px;")
+              if tuote.id < 50
+                img(src="http://saimaastill.fi/wp-content/uploads/2014/" + tuote.kuvaurl + ".jpg", width=200, height=150)
+              else
+                img(src="http://saimaastill.fi/wp-content/uploads/2016/" + tuote.kuvaurl + ".jpg", width=200, height=150)
+            td
+              p #{tuote.tuotenimi}
+              p #{tuote.kategoria} - 
+              a(target="_blank", href="http://saimaastill.fi/portfolios/" + (tuote.kategoria.replace(/ /g, "-")).toLowerCase().replace(/suppressor-(pistol|quick)/g, "supressor-$1")) more info
+              input.form-control(id="tuote_" + tuote.id, type="number", value="1")
+              button.btn.btn-block.btn-success.additionButton(data-tuote=tuote.id) Add to cart 
+                span.glyphicon.glyphicon-shopping-cart
+  script(src="javascripts/kauppasivu.js")

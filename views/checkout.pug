@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  ul.nav.nav-pills.nav-justified
+    li.active
+      a(data-toggle="pill", href="#tuotteet") Shopping cart
+    li
+      a(data-toggle="pill", href="#postitiedot") Order information
+    li
+      a(data-toggle="pill", href="#tilausnapit") Payment
+  .tab-content
+    #tuotteet.tab-pane.in.active
+      h1 Your shopping cart  
+      each tuote in tiedot
+        div.tuotediv(data-tuote=tuote.id)
+          table(style="border: 15px solid transparent;")
+            tr
+              td(style="width: 215px;")
+                if tuote.id < 50
+                  img(src="http://saimaastill.fi/wp-content/uploads/2014/" + tuote.kuvaurl + ".jpg", width=150, height=125)
+                else
+                  img(src="http://saimaastill.fi/wp-content/uploads/2016/" + tuote.kuvaurl + ".jpg", width=150, height=125)
+              td
+                p #{tuote.tuotenimi}
+                p #{tuote.kategoria}
+                p Quantity: 
+                  span
+      a.btn.btn-lg.btn-warning(style="float:right", data-toggle="pill", href="#postitiedot") Posting information
+    #postitiedot.tab-pane
+      form
+        .form-group
+          label(for="etunimi") First name
+          input#etunimi.form-control(type="text")
+        .form-group
+          label(for="sukunimi") Last name
+          input#sukunimi.form-control(type="text")
+        .form-group
+          label(for="osoite") Mail address
+          input#osoite.form-control(type="text")
+        .form-group
+          label(for="postinumero") Zip code
+          input#postinumero.form-control(type="number")
+        .form-group
+          label(for="postitt") City
+          input#postitt.form-control(type="text")
+        .form-group
+          label(for="email") Your e-mail address
+          input#email.form-control(type="text")
+        .form-group
+          label(for="aselupakuva") Your gun permission
+          input#asekupakuva.form-control-file(type="file", accept="image/*")
+    #tilausnapit.tab-pane
+      h3 Your payment options
+      p This store is still under development. This page will feature e-payment options at a further date. Until then, please use the button below to leave a traditional order into the database. Someone from the staff will contact you shortly conserning your order, its billing information etc. Thank you for understanding.
+      #tilausnappi.btn.btn-success.btn-block Place an order
+  script(src="javascripts/tilaus.js")

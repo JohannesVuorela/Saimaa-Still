@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  p(style="padding: 3em;") Thank you! Your order has been succesfully received. Redirecting back to the home page in 5 seconds...
+  script.
+    setTimeout(function() { location.replace("/"); }, 5000);

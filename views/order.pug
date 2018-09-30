@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  #tilausformi(style="padding: 10px 100px;")
+    h1 Place your order
+    form
+      .form-group
+        label(for="username") Username:
+        input#username.form-control(type="text")
+      .form-group
+        label(for="salasana") Password:
+        input#salasana.form-control(type="password")
+      .form-group
+        label(for="salasana2") Password again:
+        input#salasana2.form-control(type="password")
+      .form-group
+        label(for="email") Your e-mail:
+        input#email.form-control(type="e-mail")
+    button#tilausnappi.btn.btn-success.btn-block.btn-lg(type="submit") Order
+  script(src="javascripts/tilaussivu.js")

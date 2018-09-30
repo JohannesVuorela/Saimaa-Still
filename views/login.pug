@@ -1,0 +1,9 @@
+form
+  .form-group
+    label(for='loginUsername') Username
+    input#loginUsername.form-control(type='text')
+  .form-group
+    label(for='loginPassword') Password
+    input#loginPassword.form-control(type='password')
+#loginNappi.btn.btn-primary.btn-block(onclick="kirjaudu()", style="margin-bottom:10px;") Login
+a(href='/register') Create a new account

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  #rekisteriformi(style="padding: 10px 100px;")
+    h1 Register your account
+    form(method="post")
+      .form-group
+        label(for="username") Username:
+        input#username.form-control(type="text")
+      .form-group
+        label(for="salasana") Password:
+        input#salasana.form-control(type="password")
+      .form-group
+        label(for="salasana2") Password again:
+        input#salasana2.form-control(type="password")
+      .form-group
+        label(for="email") Your e-mail:
+        input#email.form-control(type="e-mail")
+    #rekisterinappi.btn.btn-success.btn-block.btn-lg Create account
+  script(src="javascripts/rekisterisivu.js")
