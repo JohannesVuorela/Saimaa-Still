@@ -1,5 +1,16 @@
+var tuotelista = [];
+
 $(function() {
+  $("[data-toggle=popover]").popover({ html: true });
+  
+  $.get("/productlist", function(data) {
+    tuotelista = data;
+  }).done(function() {
+    updateOstoskori();
+  });
+  
   $(".additionButton").click(function() {
+    alert("Painoit nappia");
     var keksinNimi = "saimaastill_tuote_" + $(this).data("tuote");
     var tuotelistaus = (parseInt(sessionStorage.getItem(keksinNimi)))
                        ? parseInt(sessionStorage.getItem(keksinNimi))
@@ -10,53 +21,48 @@ $(function() {
     updateOstoskori();
   });
   
-  updateLogin();  
-  updateOstoskori();
+  updateLogin();
 });
 
 kirjaudu = function() {
-  $("#loginNappi").click(function() {
-    $.post("/login", {
-      tunnus: $("#loginUsername").val(),
-      salasana: $("#loginPassword").val()
-    }, function(data) {
-      if(data == "Success") {
-        location.reload();
-      } else {
-        alert(data);
-      }
-    });
+  $.post("/login", {
+    tunnus: $("#loginUsername").val(),
+    salasana: $("#loginPassword").val()
+  }, function(data) {
+    if(data == "Success") {
+      location.reload();
+    } else {
+      alert(data);
+    }
   });
+}
+
+poistatuote = function(numero) {
+  sessionStorage.removeItem("saimaastill_tuote_" + numero);
+  updateOstoskori();
 }
 
 updateLogin = function() {
   $.get("/kirjautunut", function(data) {
-    $("#loginpalkki").html(data);
+    $("#loginPalkki").attr("data-content", data).data("bs.popover").setContent();
   });
 }
 
 updateOstoskori = function() {
-  var cartHTML = "<h3>Shopping Cart</h3>";
+  var cartHTML = "";
   
-  $(".additionButton").each(function() {
-    if(sessionStorage.getItem("saimaastill_tuote_" + $(this).data("tuote"))) {
-      cartHTML += sessionStorage.getItem("saimaastill_tuote_" + $(this).data("tuote"))
-                + " x " + $("#tuotediv_" + $(this).data("tuote")).find("p").first().text()
-                + "<a style='float: right;' data-poistettavatuote=" + $(this).data("tuote")
-                + "><span class='glyphicon glyphicon-trash'></span></a><br />";
+  for(i in tuotelista) {
+    if(sessionStorage.getItem("saimaastill_tuote_" + tuotelista[i].id)) {
+      cartHTML += sessionStorage.getItem("saimaastill_tuote_" + tuotelista[i].id)
+                + " x " + tuotelista[i].tuotenimi
+                + "<a style='float: right;' onclick=poistatuote(" + tuotelista[i].id
+                + ")><span class='glyphicon glyphicon-trash'></span></a><br />";
     }
-  });
-  
-  $("#ostoskori").html(cartHTML);
-  
-  var poistoLinkit = $("#ostoskori").find("a");
-  if(poistoLinkit.length > 0) {
-    poistoLinkit.click(function() {
-      sessionStorage.removeItem("saimaastill_tuote_" + $(this).data("poistettavatuote"));
-      updateOstoskori();
-    });
-    $("#ostoskori").append("<a class='btn btn-block btn-success' href='http://localhost:5000/checkout' style='margin-top:10px;'>Go to checkout</a>");
-  } else {
-    $("#ostoskori").append("<p>Your shopping cart is empty.</p>")
   }
+  
+  cartHTML += (cartHTML === "") ? "Your shopping cart is empty." : "<a href='/checkout'>Go to checkout</a>";
+  
+  $("#ostoskori").attr("data-content", cartHTML).data("bs.popover").setContent();
+  
+  //$("#ostoskori").append("<a class='btn btn-block btn-success' href='http://localhost:5000/checkout' style='margin-top:10px;'>Go to checkout</a>");
 }

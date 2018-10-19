@@ -8,6 +8,10 @@ html
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
   body
     #store.container-fluid
-      a(href="/")
-        img(src="kuvat/logo_beta.jpg", style="width: 960px; margin-left: 0px;")
+      img(src="../kuvat/logo_beta.jpg", style="width: 100%; margin-left: 0px;")
+      a(href="/about", style="float: left; margin: -40px 50px; font-size: 30px; color: #FFFFFF;") <span class="glyphicon glyphicon-info-sign"></span>
+      a(href="/", style="float: left; margin: -40px 10px; font-size: 30px; color: #FFFFFF;") <span class="glyphicon glyphicon-home"></span>
+      a#loginPalkki(data-toggle="popover", data-placement="bottom", data-title="Login", data-html="true", data-content="", style="float: right; margin: -40px 50px; font-size: 30px; color: #FFFFFF; cursor: pointer;") <span class="glyphicon glyphicon-user"></span>
+      a#ostoskori(data-toggle="popover", data-placement="bottom", data-title="Shopping cart", data-html="true", data-content="Your shopping cart is empty.", style="float: right; margin: -40px 10px; font-size: 30px; color: #FFFFFF; cursor: pointer;") <span class="glyphicon glyphicon-shopping-cart"></span>
       block content
+    script(src="../javascripts/kauppasivu.js")

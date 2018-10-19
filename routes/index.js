@@ -23,26 +23,6 @@ var yhteys = mysql.createPool({
   multipleStatements: true
 });
 
-var generalOptions = {
-  appHandler: app,
-  hostUrl: "http://localhost:5000"
-};
-
-var maksunappi = require('maksunappi').create(generalOptions);
-
-module.exports = function(passport) {
-  passport.serializeUser(function(user, done) {
-    done(null, user);
-  });
-  
-  passport.deserializeUser(function(id, done) {
-    var komento = "SELECT * FROM saimaastill_users WHERE id = ?";
-    connection.query(komento, id, function(err, rows) {
-      done(err, rows[0]);
-    });
-  });
-}
-
 router.get('/', function(req, res, next) {
   var komento = "SELECT * FROM saimaastill_tuotteet;";
   yhteys.query(komento, function(err, results) {
@@ -74,8 +54,18 @@ router.get('/onkoemailjoolemassa/:email', function(req, res, next) {
   });
 });
 
+/*
 router.get('/luotaulu', function(req, res, next) {
-  var komento = "SELECT * FROM saimaastill_kuitit; SELECT * FROM saimaastill_tavaratilaukset";
+  var komento = "UPDATE saimaastill_tuotteet SET hinta = 470 WHERE id = 141";
+  yhteys.query(komento, function(err, rows, fields) {
+    if(err) { console.log("Tapahtui virhe: " + err); throw err; }
+    res.send(rows);
+  });
+});
+*/
+
+router.get('/productlist', function(req, res, next) {
+  var komento = "SELECT * FROM saimaastill_tuotteet";
   yhteys.query(komento, function(err, rows, fields) {
     if(err) { console.log("Tapahtui virhe: " + err); throw err; }
     res.send(rows);
@@ -137,16 +127,6 @@ router.get('/checkout', function(req, res, next) {
   });
 });
 
-router.get('/maksa', function(req, res, next) {
-  res.send(maksunappi.paymentButton("nordea", {
-    requestId: "1212121121212",
-    amount: 25,
-    messageForBankStatement: "Saimaa Still Order",
-    reference: maksunappi.referenceNumbers.toFinnishPaymentReference('323223323223'),
-    language: 'FI'
-  }));
-});
-
 router.post('/tilaa', function(req, res, next) {
   var komento = "INSERT INTO saimaastill_kuitit (etunimi, sukunimi, hinta, pvm, spostiosoite, postiosoite, postinumero, postitoimipaikka) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   yhteys.query(komento, [req.body.etunimi, req.body.sukunimi, 0, new Date(), req.body.spostiosoite, req.body.postiosoite, req.body.postinumero, req.body.postitoimipaikka], function(err, results) {
@@ -171,6 +151,14 @@ router.get('/staff', function(req, res, next) {
   var komento = "SELECT * FROM saimaastill_kuitit; SELECT * FROM saimaastill_tavaratilaukset; SELECT * FROM saimaastill_tuotteet;";
   yhteys.query(komento, function(err, results) {
     res.render('staff', { kuitit: results[0], tavaratilaukset: results[1], tuotteet: results[2] });
+  });
+});
+
+router.get('/about', function(req, res, next) { res.render("about"); });
+
+router.get('/products/:tuote', function(req, res, next) {
+  yhteys.query("SELECT * FROM saimaastill_tuotteet WHERE id = ?;", req.params.tuote, function(err, results) {
+    res.render("product", { tuote: results[0] });
   });
 });
 

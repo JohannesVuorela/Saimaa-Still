@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  div(style="width: 200px; float: right; margin: 30px; border: solid black 3px; padding: 1em;")
+    h4 Intended for weapons:
+    p= tuote.aseet
+  div(style="padding: 1em;")
+    h3 SStill #{tuote.tuotenimi}
+    img(src="../kuvat/" + tuote.kuvaurl + ".png", style="width: 200px;")
+    div(style="display: block; width: 200px;")
+      p <strong>Price:</strong> #{tuote.hinta}
+      input.form-control(id="tuote_" + tuote.id, type="number", value="1")
+      button.btn.btn-block.btn-success.additionButton(data-tuote=tuote.id) Add to cart 
+        span.glyphicon.glyphicon-shopping-cart
+    p!= tuote.tuotekuvaus
+    h4 Product details
+    .table-responsive
+      table.table
+        - var ekatviis = tuote.taulukkoarvot.split(",");
+        tr
+          th Length total:
+          td #{ekatviis[0]} mm
+        tr
+          th Barrel extension:
+          td #{ekatviis[1]} mm
+        tr
+          th Weigth:
+          td #{ekatviis[2]} gr
+        tr
+          th Diameter:
+          td #{ekatviis[3]} mm
+        tr
+          th Suppressed db:
+          td #{ekatviis[4]} A
+        tr
+          th Lifetime shots:
+          td= tuote.lifetimeshots
+        tr
+          th Maintenance with:
+          td= tuote.maintenancewith
+        tr
+          th Materials:
+          td= tuote.materials
+        tr
+          th Finishes:
+          td= tuote.finishes
