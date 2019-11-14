@@ -1,10 +1,5 @@
 $(function() {
-  /*
-  $.get("http://localhost:5000/maksa", function(data) {
-    $("#tilausnappi").html(data);
-  });
-  */
-
+  
   var tavaramj = "";
   
   $(".tuotediv").each(function() {

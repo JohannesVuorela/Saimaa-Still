@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var pool = new pg.Pool();
 var mysql = require('mysql');
 
+require('dotenv').config();
+
 var app = express();
 
 app.use(bodyParser.json());
@@ -16,10 +18,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var yhteys = mysql.createPool({
   connectionLimit: 10,
-  host: 'us-cdbr-iron-east-05.cleardb.net',
-  user: 'b00c49b7bdca25',
-  password: '389607ac',
-  database: 'heroku_18d39e865fa4d72',
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PWORD,
+  database: process.env.MYSQL_DBASE,
   multipleStatements: true
 });
 
@@ -53,16 +55,6 @@ router.get('/onkoemailjoolemassa/:email', function(req, res, next) {
     res.send(results);
   });
 });
-
-/*
-router.get('/luotaulu', function(req, res, next) {
-  var komento = "UPDATE saimaastill_tuotteet SET hinta = 470 WHERE id = 141";
-  yhteys.query(komento, function(err, rows, fields) {
-    if(err) { console.log("Tapahtui virhe: " + err); throw err; }
-    res.send(rows);
-  });
-});
-*/
 
 router.get('/productlist', function(req, res, next) {
   var komento = "SELECT * FROM saimaastill_tuotteet";
@@ -161,19 +153,5 @@ router.get('/products/:tuote', function(req, res, next) {
     res.render("product", { tuote: results[0] });
   });
 });
-
-/*
-router.post('/tuotteet', function(req, res, next) {
-  var komento = "INSERT INTO saimaastill_tuotteet (tuotenimi, kategoria, hinta, kuvaurl) VALUES (?, ?, ?, ?);";
-});
-
-router.post('/', function(req, res, next) {
-  var komento = "";
-  yhteys.query(komento, function(err, rows, fields) {
-    if(err) { console.log("Tapahtui virhe: " + err); throw err; }
-    res.send(rows);
-  });
-});
-*/
 
 module.exports = router;

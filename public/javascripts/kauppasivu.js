@@ -64,5 +64,4 @@ updateOstoskori = function() {
   
   $("#ostoskori").attr("data-content", cartHTML).data("bs.popover").setContent();
   
-  //$("#ostoskori").append("<a class='btn btn-block btn-success' href='http://localhost:5000/checkout' style='margin-top:10px;'>Go to checkout</a>");
 }
